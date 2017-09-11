@@ -11,7 +11,7 @@ attr_accessor :password, :password_confirmation
 
   validates :name, presence: true
   validates :phone_number, presence: true, length: {minimum: 10}
-  validates :password, confirmation: true, length: {minimum: 6}
+  validates :password, confirmation: true, length: {minimum: 6}, allow_nil: true
 
   validates_format_of :email, :with => /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 

@@ -5,16 +5,16 @@
 </p>
 <body bgcolor="#99CCCC" text="#003399" vlink="#0066FF">
 
-<div class="Sign_Form">
-  <center><h1>Sign Up</h1>
-  <%= form_for(:customer, :url => {:controller => 'customers', :action => 'create'}) do |f| %>
+<div class="Edit_Form">
+  <center><h1>Update Details</h1>
+  <%= form_with model: @customer do |f| %>
     <p> Username:</br> <%= f.text_field :name%> </p>
     <p> Email:</br> <%= f.text_field :email%> </p>
     <p> Phone Number:</br> <%= f.text_field :phone_number%> </p>
     <%= f.submit :Update %>
   <% end %>
   <% if @customer.errors.any? %>
-    <ul class="Signup_Errors">
+    <ul class="Update_Errors">
     <% for message_error in @customer.errors.full_messages %>
       <li>* <%= message_error %></li>
     <% end %>
