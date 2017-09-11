@@ -1,7 +1,7 @@
 class Customer < ApplicationRecord
 attr_accessor :password, :password_confirmation
 
-  has_many :delivery_addresses
+  has_many :delivery_addresses, dependent: :destroy
   has_one :order
   has_many :shopping_cart_items
 

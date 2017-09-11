@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
   before_action :authenticate_customer, :only => [:show]
-  before_action :save_login_state, :only => [:new,:create]
+  before_action :save_login_state, :only => [:new, :create]
 
   def index
     if is_admin?

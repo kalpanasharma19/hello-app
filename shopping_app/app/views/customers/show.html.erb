@@ -24,6 +24,11 @@
   <%= @customer.phone_number %>
 </p>
 
+<h4>Delivery Addresses:</h4>
+<%= render @customer.delivery_addresses %>
+
+<h4> Add a delivery address: </h4>
+<%= render 'delivery_addresses/form' %>
 
 <%= link_to 'Edit', edit_customer_path(@customer) %>
 <%= link_to 'Back', customers_path %>

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   resources :sessions
 
-  resources :customers
+  resources :customers do
+    resources :delivery_addresses
+  end
 
   get 'welcome/index'
   root 'welcome#index'
