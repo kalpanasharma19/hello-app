@@ -11,12 +11,13 @@
 
   <h1>Log in</h1>
   <%= form_tag(:action => 'create') do %>
+
     <p>Username:</br> <%= text_field_tag(:username) %></p>
     <p>Password:</br> <%= password_field_tag :login_password %></p>
     <%= submit_tag("Log In") %>
   <% end %>
 
-  <h6> First Time Visitor...Please SignUp First</h6>
+  <h6> First Time Visitor?...Please SignUp First</h6>
   <%= link_to 'SignUp', {controller: 'customers', action: 'new'} %>
 </center>
 </div>

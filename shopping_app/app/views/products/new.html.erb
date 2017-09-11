@@ -1,5 +1,10 @@
+<%= render 'header' %>
 <h1>New Product</h1>
 
 <%= render "form" %>
 
+<p><%= if is_admin?
+     link_to 'Add more products', new_product_path
+    end
+%></p>
 <%= link_to 'Back', products_path %>

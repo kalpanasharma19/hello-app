@@ -1,10 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  helper_method :is_admin?
+
+  def is_admin?
+    Customer.find(session[:customer_id]).customer_role?
+  end
+
   protected
   def authenticate_customer
     if session[:customer_id]
-     # set current user object to @current_user object variable
+     # set current customer object to @current_customer object variable
       @current_customer = Customer.find session[:customer_id]
       return true
     else
@@ -18,9 +24,6 @@ class ApplicationController < ActionController::Base
       return false
     else
       return true
-  end
-  def name
-  @customername = Customer.find(session[:customer_id]).name
   end
 
 end

@@ -1,4 +1,4 @@
-<body bgcolor="#99CCCC" text="#FF33OO" vlink="#0066FF">
+<body bgcolor="#99CCCC" text="#000000" vlink="#0066FF">
 <p align= right>
   <font size= "5" color ="#006600">Hello <%= @customername = Customer.find(session[:customer_id]).name%></font>
   <%= link_to 'Home', controller: 'welcome' %>
@@ -7,23 +7,3 @@
               data: { confirm: 'Are you sure?' } %>
 </p>
 <HR SIZE="7" WIDTH="100%" color="#CC6699">
-
-
-<p>
-  <strong>Customer Name:</strong>
-  <%= @customer.name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @customer.email %>
-</p>
-
-<p>
-  <strong>Phone Number:</strong>
-  <%= @customer.phone_number %>
-</p>
-
-
-<%= link_to 'Edit', edit_customer_path(@customer) %>
-<%= link_to 'Back', customers_path %>
