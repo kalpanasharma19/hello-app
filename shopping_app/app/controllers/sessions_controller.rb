@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+  before_action :authenticate_customer, :only => [:show]
+  before_action :save_login_state, :only => [:new,:create]
+
+
   def index
       render "new"
   end
@@ -16,10 +20,6 @@ class SessionsController < ApplicationController
       render "new"
     end
   end
-
-
-  #before_filter :authenticate_customer, :only => [:show]
-  #before_filter :save_login_state, :only => [:new,:create]
 
   def destroy
   session[:customer_id] = nil

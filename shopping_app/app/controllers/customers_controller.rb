@@ -1,6 +1,13 @@
 class CustomersController < ApplicationController
+  before_action :authenticate_customer, :only => [:show]
+  before_action :save_login_state, :only => [:new,:create]
+
   def index
-    @customers = Customer.all
+    if is_admin?
+      @customers = Customer.all
+    else
+      redirect_to root_url
+    end
   end
 
   def show
