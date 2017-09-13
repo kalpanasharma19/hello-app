@@ -50,11 +50,8 @@ class ProductsController < ApplicationController
     end
 
     def valid_user
-      if is_admin?
-        return true
-      else
+        return true if is_admin?
         redirect_to root_url
-      end
     end
 
 end

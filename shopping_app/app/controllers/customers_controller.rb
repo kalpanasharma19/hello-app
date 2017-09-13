@@ -1,12 +1,13 @@
 class CustomersController < ApplicationController
-  before_action :authenticate_customer, :only => [:show]
-  before_action :save_login_state, :only => [:new, :create]
+  before_action :authenticate_customer, only: [:show]
+  before_action :save_login_state, only: [:new, :create]
 
   def index
     if is_admin?
       @customers = Customer.all
     else
-      redirect_to root_url
+      @customer = current_customer
+      render 'show'
     end
   end
 
@@ -26,7 +27,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
     if @customer.save
       session[:customer_id] =@customer.id
-      redirect_to(:controller => 'products', :action => 'index')
+      redirect_to products_path
     else
       render "new"
     end
@@ -34,8 +35,7 @@ class CustomersController < ApplicationController
   end
 
   def update
-    @customer = Customer.find(params[:id])
-
+    @customer = Customer.find_by(params[:id])
     if @customer.update_attributes(customer_params)
       redirect_to @customer
     else
@@ -44,7 +44,7 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(params[:id])
     @customer.destroy
     redirect_to customers_path
   end

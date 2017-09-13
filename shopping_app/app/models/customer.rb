@@ -3,7 +3,7 @@ attr_accessor :password, :password_confirmation
 
   has_many :delivery_addresses, dependent: :destroy
   has_one :order
-  has_many :shopping_cart_items
+  has_many :shopping_cart_items, dependent: :destroy
 
   validates_associated :delivery_addresses
   validates_associated :order
@@ -39,5 +39,4 @@ attr_accessor :password, :password_confirmation
   def match_password(login_password="")
     encrypted_password == BCrypt::Engine.hash_secret(login_password, salt)
   end
-
 end

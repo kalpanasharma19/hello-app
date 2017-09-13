@@ -1,0 +1,15 @@
+
+  <% @customer.shopping_cart_items.each do |item| %>
+    <p><strong>Product:</strong>
+    <%= item.product.name %></p>
+
+    <p><strong>Price:</strong>
+    <%= item.product.price %></p>
+
+    <p><strong>Quantity</strong>
+    <%= item.quantity %></p>
+    <%= link_to 'Delete Item', [item.customer,item],
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></p>
+  <% end %>
+  <%= link_to 'Back', products_path %>

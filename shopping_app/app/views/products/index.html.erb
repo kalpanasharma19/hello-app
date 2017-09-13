@@ -3,9 +3,8 @@
 
 <h2>List of Products</h2>
 <%= if is_admin?
-     link_to 'New product', new_product_path
-    end
-%>
+      link_to 'New product', new_product_path
+    end%>
 
 <style>
 table,th {text-align: left;}
@@ -26,23 +25,15 @@ th { background-color: black; color: white; }
       <td><%= product.name %></td>
 
       <td><%= product.price %></td>
-
-      <td><%= link_to 'Show-details', product_path(product) %></td>
-      <td><%=   if is_admin?
-                  link_to 'Edit', edit_product_path(product)
-                end
-      %></td>
-      <td><%=  if is_admin?
-                 link_to 'Destroy', product_path(product),
-                 method: :delete,
-                 data: { confirm: 'Are you sure?' }
-              end
-      %></td>
+      <td><%= link_to 'Add to cart', new_customer_shopping_cart_item_path(customer_id: current_customer.id, product_id: product.id) %></td>
+      <td><%= if is_admin?
+               link_to 'Show-details', product_path(product)
+               link_to 'Edit', edit_product_path(product)
+               link_to 'Destroy', product_path(product),
+                       method: :delete,
+                       data: { confirm: 'Are you sure?' } end%></td>
     </tr>
   <% end %>
 </table>
+<%= link_to 'Go to Customers Details', customers_path %>
 
-<%=   if is_admin?
-        link_to 'Go to Customers Details', customers_path
-      end
-%>

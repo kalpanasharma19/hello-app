@@ -1,5 +1,7 @@
 class ShoppingCartItem < ApplicationRecord
   belongs_to :customer
-  has_one :product
+  belongs_to :product
   validates_associated :product
+  validates :customer_id, presence: true
+  validates :quantity, presence: true
 end
