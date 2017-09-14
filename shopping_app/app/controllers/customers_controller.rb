@@ -3,12 +3,7 @@ class CustomersController < ApplicationController
   before_action :save_login_state, only: [:new, :create]
 
   def index
-    if is_admin?
-      @customers = Customer.all
-    else
-      @customer = current_customer
-      render 'show'
-    end
+    @customers = Customer.all if valid_user
   end
 
   def show
@@ -26,7 +21,7 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      session[:customer_id] =@customer.id
+      session[:customer_id] = @customer.id
       redirect_to products_path
     else
       render "new"
@@ -35,16 +30,16 @@ class CustomersController < ApplicationController
   end
 
   def update
-    @customer = Customer.find_by(params[:id])
+    @customer = Customer.find(params[:id])
     if @customer.update_attributes(customer_params)
-      redirect_to @customer
+      redirect_to customer_path(@customer)
     else
-      render 'edit'
+      render "edit"
     end
   end
 
   def destroy
-    @customer = Customer.find_by(params[:id])
+    @customer = Customer.find(params[:id])
     @customer.destroy
     redirect_to customers_path
   end
@@ -54,4 +49,8 @@ class CustomersController < ApplicationController
     params.require(:customer).permit(:name, :email, :phone_number, :password, :password_confirmation)
   end
 
+  def valid_user
+    return true if is_admin?
+    redirect_to root_url
+  end
 end

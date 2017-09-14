@@ -1,6 +1,8 @@
 class Order < ApplicationRecord
   belongs_to :customer
-  has_one :delivery_address, inverse_of: :order
+  belongs_to :delivery_address
+  has_many :order_items, dependent: :destroy
+  has_many :products, through: :order_items
 
-  validates_associated :delivery_address
+  validates_associated :order_items
 end

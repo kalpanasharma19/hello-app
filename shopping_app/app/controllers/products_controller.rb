@@ -1,12 +1,12 @@
 class ProductsController < ApplicationController
-  before_action :valid_user, :only => [:new,:create,:edit,:update,:destroy]
+  before_action :valid_user, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @products = Product.all
   end
 
   def show
-    @product = Product.find(params[:id])
+    @product = Product.find(params [:id])
   end
 
   def new
@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
+    @product = Product.find(params [:id])
   end
 
   def create
@@ -45,13 +45,12 @@ class ProductsController < ApplicationController
   end
 
   private
-    def product_params
-      params.require(:product).permit(:name, :description, :price)
-    end
+  def product_params
+    params.require(:product).permit(:name, :description, :price)
+  end
 
-    def valid_user
-        return true if is_admin?
-        redirect_to root_url
-    end
-
+  def valid_user
+    return true if is_admin?
+    redirect_to root_url
+  end
 end

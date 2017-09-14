@@ -13,7 +13,7 @@ th { background-color: black; color: white; }
 
 </style>
 
-<table style= "width:50%" >
+<table style= "width:70%" >
   <tr>
     <th>Name</th>
 
@@ -25,15 +25,14 @@ th { background-color: black; color: white; }
       <td><%= product.name %></td>
 
       <td><%= product.price %></td>
-      <td><%= link_to 'Add to cart', new_customer_shopping_cart_item_path(customer_id: current_customer.id, product_id: product.id) %></td>
-      <td><%= if is_admin?
-               link_to 'Show-details', product_path(product)
-               link_to 'Edit', edit_product_path(product)
-               link_to 'Destroy', product_path(product),
+      <td><%= link_to 'Add to Cart', shopping_cart_items_path(product_id: product.id), method: :post %></td>
+      <td><%= link_to 'Show-details', product_path(product) %>
+          <%= link_to 'Edit', edit_product_path(product) if is_admin? %>
+          <%= link_to 'Destroy', product_path(product),
                        method: :delete,
-                       data: { confirm: 'Are you sure?' } end%></td>
+                       data: { confirm: 'Are you sure?' } if is_admin?%></td>
     </tr>
   <% end %>
 </table>
-<%= link_to 'Go to Customers Details', customers_path %>
+<%= link_to 'Go to Customers Details', customers_path if is_admin? %>
 

@@ -13,9 +13,9 @@
 <h2>List of Customers</h2>
 
 <style>
-table,th {text-align: left;}
+  table,th {text-align: left;}
 
-th { background-color: black; color: white; }
+  th { background-color: black; color: white; }
 
 </style>
 
@@ -43,7 +43,5 @@ th { background-color: black; color: white; }
     </tr>
   <% end %>
 </table>
-<%=   if is_admin?
-        link_to 'Go to Products Details', products_path
-      end
-%>
+
+<%= link_to 'Go to Products Details', products_path if is_admin?%>

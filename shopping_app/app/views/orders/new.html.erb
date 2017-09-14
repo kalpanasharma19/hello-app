@@ -1,0 +1,23 @@
+
+<% @delivery_address = @customer.delivery_addresses.find_by(params[:delivery_address_id]) %>
+<p>
+  <strong>Name:</strong>
+  <%= @delivery_address.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @delivery_address.address %>
+</p>
+
+<p>
+  <strong>Phone Number:</strong>
+  <%= @delivery_address.phone_number %>
+</p>
+
+<%= form_with(model: [@customer, @customer.orders.build]) do |f| %>
+  <%= f.hidden_field :delivery_address_id, value: @delivery_address.id%>
+  <%= f.submit 'Confirm Order' %>
+<% end %>
+
+<%= link_to 'Go to products list', products_path %>

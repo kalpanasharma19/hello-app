@@ -15,6 +15,7 @@
     <p> Password Confirmation:</br> <%= f.password_field :password_confirmation%> </p>
     <%= f.submit :Signup %>
   <% end %>
+
   <% if @customer.errors.any? %>
     <ul class="Signup_Errors">
     <% for message_error in @customer.errors.full_messages %>
