@@ -33,13 +33,12 @@
       <td><%= customer.phone_number %></td>
 
       <td><%= link_to 'Show-details', customer_path(customer) %></td>
-      <td><%=
-                link_to 'Edit', edit_customer_path(customer)
-
-      %></td>
+      <td>
+        <%= link_to 'Edit', edit_customer_path(customer) if customer == current_customer %>
+      </td>
       <td><%= link_to 'Destroy', customer_path(customer),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
+              data: { confirm: 'Are you sure?' } if customer == current_customer %></td>
     </tr>
   <% end %>
 </table>

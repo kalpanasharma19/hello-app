@@ -1,7 +1,4 @@
 <%= form_with model: @product, local: true  do |form| %>
-
-
-
   <p>
     <%= form.label :Product %><br>
     <%= form.text_field :name %>
@@ -12,9 +9,14 @@
     <%= form.text_area :description %>
   </p>
 
-<p>
+  <p>
     <%= form.label :Price %><br>
     <%= form.text_field :price %>
+  </p>
+
+  <p>
+    <%= form.label :image %>
+    <%= form.file_field :image%>
   </p>
 
   <p>

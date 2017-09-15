@@ -1,26 +1,29 @@
 <%= render 'products/header' %>
-<% if @customer.shopping_cart_items.any? %>
-  <% @customer.shopping_cart_items.each do |item| %>
-    <p><strong>Product:</strong>
+<% if current_customer.shopping_cart_items.any? %>
+  <% total = 0 %>
+  <% current_customer.shopping_cart_items.each do |item| %>
+    <p><strong>Product: </strong>
     <%= item.product.name %></p>
 
-    <p><strong>Price:</strong>
+    <p><strong>Price: </strong>
     <%= item.product.price %></p>
 
-    <p><strong>Quantity</strong>
+    <p><strong>Quantity: </strong>
     <%= item.quantity %>
 
-    <%= link_to "+1", shopping_cart_item_add_path(id: item), method: :post %>
-    <%= link_to "-1", shopping_cart_item_reduce_path(id: item), method: :post %></p>
+    <%= link_to "Increment", shopping_cart_item_add_path(id: item), method: :post %>
+    <%= link_to "Decrement", shopping_cart_item_reduce_path(id: item), method: :post %></p>
+    <p><strong>Total Price: </strong><%= total_price = item.product.price * item.quantity %></p>
     <%= link_to 'Delete Item', [item.customer,item],
                 method: :delete,
                 data: { confirm: 'Are you sure?' } %></p>
-    <%= link_to 'Proceed to chekout', customer_path(@customer) %>
+    <% total += total_price %>
   <% end %>
+  <p><strong>Total amount: </strong><%= total %></p>
 <% else %>
   <p> Your cart is empty! </p>
   <p> Add a Product.. </p>
 <% end %>
-
+<%= link_to 'Proceed to checkout', customer_path(current_customer) %>
 <%= link_to 'Go to Product List', products_path %>
 

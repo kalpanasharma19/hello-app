@@ -1,7 +1,4 @@
 class OrdersController < ApplicationController
-  def index
-    @orders = Order.all
-  end
 
   def show
   end
@@ -11,9 +8,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @customer = current_customer
-
-    @order = @customer.orders.create(order_params)
+    @order = current_customer.orders.create(order_params)
 
     current_customer.shopping_cart_items.each do |item|
       order_item = OrderItem.new
@@ -32,7 +27,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = current_customer.orders.find(params[:id]) rescue nil
+    @order = current_customer.orders.find_by(id: params[:id]) rescue nil
     @order.destroy
     render 'show'
   end

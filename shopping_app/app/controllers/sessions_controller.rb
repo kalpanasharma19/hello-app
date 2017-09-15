@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :authenticate_customer, only: [:show]
+  skip_before_action :authenticate_customer, only: [:new, :create]
   before_action :save_login_state, only: [:new, :create]
 
   def new

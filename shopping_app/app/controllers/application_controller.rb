@@ -1,13 +1,15 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_customer
   protect_from_forgery with: :exception
+  include CustomersHelper
   helper_method :is_admin?, :current_customer
 
   def current_customer
-    Customer.find(session[:customer_id])
+    @current_customer ||= Customer.find(session[:customer_id]) rescue nil
   end
 
   def is_admin?
-    current_customer.customer_role?
+    current_customer.customer_role? rescue nil
   end
 
   protected
@@ -18,16 +20,10 @@ class ApplicationController < ActionController::Base
       return true
     else
       redirect_to new_session_path
-      return false
     end
   end
 
   def save_login_state
-    if session[:customer_id]
-      redirect_to products_path
-      return false
-    else
-      return true
-    end
+    redirect_to products_path if session[:customer_id]
   end
 end

@@ -1,12 +1,13 @@
 class ProductsController < ApplicationController
-  before_action :valid_user, only: [:new, :create, :edit, :update, :destroy]
+  skip_before_action :authenticate_customer, only: [:index, :show]
+  before_action :check_admin, except: [:index, :show]
 
   def index
     @products = Product.all
   end
 
   def show
-    @product = Product.find(params [:id])
+    @product = Product.find_by(id: params[:id])
   end
 
   def new
@@ -15,7 +16,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params [:id])
+    @product = Product.find_by(id: params[:id])
   end
 
   def create
@@ -29,7 +30,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find(params[:id])
+    @product = Product.find_by(id: params[:id])
 
     if @product.update(product_params)
       redirect_to @product
@@ -39,17 +40,17 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
+    @product = Product.find_by(id: params[:id])
     @product.destroy
     redirect_to products_path
   end
 
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price)
+    params.require(:product).permit(:image, :name, :description, :price)
   end
 
-  def valid_user
+  def check_admin
     return true if is_admin?
     redirect_to root_url
   end

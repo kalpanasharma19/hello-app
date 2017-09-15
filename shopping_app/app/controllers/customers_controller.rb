@@ -1,13 +1,14 @@
 class CustomersController < ApplicationController
-  before_action :authenticate_customer, only: [:show]
+  skip_before_action :authenticate_customer, only: [:new, :create]
   before_action :save_login_state, only: [:new, :create]
+  before_action :valid_customer, except: [:index, :show]
 
   def index
-    @customers = Customer.all if valid_user
+    @customers = Customer.all if is_admin?
   end
 
   def show
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(id: params[:id])
   end
 
   def new
@@ -15,7 +16,7 @@ class CustomersController < ApplicationController
   end
 
   def edit
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(id: params[:id])
   end
 
   def create
@@ -30,7 +31,7 @@ class CustomersController < ApplicationController
   end
 
   def update
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(id: params[:id])
     if @customer.update_attributes(customer_params)
       redirect_to customer_path(@customer)
     else
@@ -39,18 +40,20 @@ class CustomersController < ApplicationController
   end
 
   def destroy
-    @customer = Customer.find(params[:id])
+    @customer = Customer.find_by(id: params[:id])
     @customer.destroy
     redirect_to customers_path
   end
 
   private
+
   def customer_params
     params.require(:customer).permit(:name, :email, :phone_number, :password, :password_confirmation)
   end
 
-  def valid_user
-    return true if is_admin?
-    redirect_to root_url
+  def valid_customer
+    return true if Customer.find_by(id: params[:id]) == current_customer
+    flash[:alert] = "You can edit your details only!"
+    redirect_to customers_path
   end
 end

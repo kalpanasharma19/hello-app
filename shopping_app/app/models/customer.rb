@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
   attr_accessor :password, :password_confirmation
+  #enum customer_role: [:admin, :customer]
 
   has_many :delivery_addresses, dependent: :destroy
   has_many :orders, dependent: :destroy
