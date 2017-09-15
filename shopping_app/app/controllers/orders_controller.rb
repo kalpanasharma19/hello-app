@@ -4,6 +4,10 @@ class OrdersController < ApplicationController
   end
 
   def new
+    if current_customer.shopping_cart_items.count == 0
+      flash[:success] = "Please add products to cart!"
+      redirect_to products_path
+    end
   end
 
   def create
@@ -21,7 +25,6 @@ class OrdersController < ApplicationController
       product.save
       item.destroy
     end
-
     if @order.save
       flash[:success] = "Order confirmed!"
       redirect_to products_path
