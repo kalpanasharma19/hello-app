@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @customer = current_customer
   end
 
   def create
@@ -17,6 +16,9 @@ class OrdersController < ApplicationController
       order_item.price = item.product.price
       order_item.quantity = item.quantity
       order_item.save
+      product = Product.find_by(id: item.product.id)
+      product.stock_quantity -= item.quantity
+      product.save
       item.destroy
     end
 
